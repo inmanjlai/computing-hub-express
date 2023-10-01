@@ -22,9 +22,20 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.get('/', (req, res) => {
+app.get('/', async(req, res) => {
     if (!req.session.user) return res.redirect('/login');
-    res.render('index', { user: req.session.user });
+
+    const files = await prisma.codedocs.findMany({
+        where: {
+            userid: req.session.user.id,
+            problem: '',
+            filename: {
+                not: ''
+            }
+        }
+    })
+
+    res.render('index', { user: req.session.user, files });
 });
 
 app.post('/codedocs', async(req, res) => {

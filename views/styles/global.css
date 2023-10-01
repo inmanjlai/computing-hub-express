@@ -26,3 +26,117 @@ img {
 input, textarea, button, select {
     font: inherit;
 }
+
+#notification {
+    position: absolute;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    bottom: 2rem;
+    right: calc(50% - 156px);
+    transform: translateY(10px);
+    border-radius: 5px;
+    color: white;
+    /* display: none; */
+    transition: transform 0.3s, opacity 0.3s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+#notification.show {
+    opacity: 1;
+    /* display: block; */
+    transform: translateY(0);
+}
+
+#notification.alert {
+    background-color: #6ef2a7;
+    color: black;
+}
+
+#notification.error {
+    background-color: #f26e6e;
+}
+
+dialog {
+    background-color: transparent;
+    border: none;
+}
+
+dialog::backdrop {
+    background-color: #2d2d2d40;
+}
+
+.active {
+    background-color: #2d2d2d20;
+    font-weight: 600;
+}
+
+#load-file-content-container {
+    background-color: white;
+    border: 1px solid black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#load-file-content {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    position: relative;
+}
+
+#load-file h1 {
+    padding: 0.5rem 1rem;
+}
+
+#file-list {
+    border-top: 1px solid #2d2d2d;
+}
+
+#file-list p {
+    padding: 0.5rem;
+    transition: background-color 0.3s;
+    min-width: 300px;
+    cursor: pointer;
+}
+
+#file-list p:hover {
+    background-color: #2d2d2d10;
+}
+
+#file-preview-code {
+    background-color: #2d2d2d;
+    color: palegreen;
+    padding: 0.5rem;
+    height: 100%;
+    min-width: 300px;
+}
+
+#load-button {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background-color: #6ef2a7;
+    border: none;
+    border-radius: 50px;
+    padding: 1rem;
+    font-size: 24px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+@media screen and (max-width: 650px) {
+    #file-preview {
+        display: none;
+    }
+
+    #file-list {
+        border-top: 1px solid #2d2d2d20;
+    }
+}

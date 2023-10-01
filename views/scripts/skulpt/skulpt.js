@@ -156,24 +156,32 @@ async function save()
     var code = editor.getValue();
     var userid = getCookie('userid');
 
-    const data = {
-        "filename":file,
-        "code": code,
-        "userid": userid,
-        "user": userid
-    };
+    if (file == '') {
+        displayNotification('Please enter a filename before saving', 'error')
+    } else {
+        const data = {
+            "filename":file,
+            "code": code,
+            "userid": userid,
+            "user": userid
+        };
+    
+        await fetch('/codedocs', {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+    }
 
-    await fetch('/codedocs', {
-        method: "POST",
-        headers: {
-            "content-type": "application/json"
-        },
-        body: JSON.stringify(data)
-    });
 }
 
 async function load() {
     const dialog = document.querySelector('#load-file');
+    const firstFilename = document.querySelector('#file-list p:first-child')
+
+    firstFilename.classList.add('active')
 
     dialog.showModal()
 }

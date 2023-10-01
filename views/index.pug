@@ -4,5 +4,14 @@ block content
     include ./repl.pug
 
     dialog#load-file
-        div#load-file-content
+        div#load-file-content-container
             h1 Load file
+            div#load-file-content
+                #file-list
+                    for file in files 
+                        p(onclick=`updatePreview(${JSON.stringify(file)})`)=file.filename
+                #file-preview
+                    pre#file-preview-code=files[0].code
+                button#load-button
+                    span.material-symbols-rounded arrow_forward
+                    
