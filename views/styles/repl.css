@@ -1,0 +1,138 @@
+.repl {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    flex-grow: 1;
+    gap: 1rem;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.controls-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.controls input {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #2d2d2d20;
+    flex-grow: 1;
+    border-radius: 5px;
+}
+
+.controls button {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #2d2d2d;
+    color: white;
+    gap: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+span.material-symbols-rounded{
+    font-size: 18px;
+}
+
+.ide {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#editor, #output-container {
+    flex-grow: 1;
+    height: 100%;
+    width: 100%;
+    min-width: 50%;
+}
+
+#editor {
+    border-radius: 0;
+    border: 1px solid #2d2d2d;
+    resize: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    font-size: 16px;
+}
+
+#output-container {
+    background-color: #2d2d2d;
+    height: 100%;
+    width: 100%;
+    color: palegreen;
+    padding: 0.5rem;
+    overflow: auto;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-family: Monaco, monospace;
+}
+
+#input {
+    background-color: transparent;
+    color: yellow;
+    width: 100%;
+    border: none;
+    resize: none;
+    outline: none;
+    font-family: Monaco, monospace;
+}
+
+@media screen and (max-width: 1000px) {
+    .ide {
+        flex-direction: column;
+    }
+
+    #editor {
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 5px;
+    }
+
+    #output-container {
+        border-bottom-left-radius: 5px;
+        border-top-right-radius: 0px;
+    }
+
+    #editor, #output-container {
+        min-width: 0%;
+    }
+
+    .controls button p {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 470px) {
+    .repl {
+        padding: 0.5rem;
+    }
+
+    .controls {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .controls input {
+        width: 100%;
+    }
+
+    .controls-buttons {
+        width: 100%;
+    }
+
+    .controls-buttons button {
+        flex-grow: 1;
+        justify-content: center;
+    }
+
+}

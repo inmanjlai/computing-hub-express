@@ -1,0 +1,18 @@
+extends layout.pug
+
+block content
+    style
+        include ./styles/login.css
+
+    div.login-page
+        form(method="POST" action="/signup")
+            h2 Sign up
+            if message
+                p.error=message
+            input(type="text" name="name" placeholder="full name" required)
+            input(type="text" name="username" placeholder="username" required)
+            input(type="email" name="email" placeholder="email" required)
+            input(type="password" name="password" placeholder="password" required)
+            input(type="password" name="confirm-password" placeholder="confirm password" required)
+            button Sign up
+            a(href="/login") Already have an account? Login

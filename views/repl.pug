@@ -1,0 +1,53 @@
+style
+    include ./styles/repl.css
+
+div.repl
+    div.controls
+        input#filename(type='text' placeholder='app.py' name='filename')
+        div.controls-buttons
+            button
+                p Load
+                span.material-symbols-rounded folder
+            button(onclick="save()")
+                p Save
+                span.material-symbols-rounded cloud_download
+            button(onclick="runit()")
+                p Run
+                span.material-symbols-rounded arrow_forward
+    div.ide
+        div#editor
+        div#output-container
+            pre#output
+            textarea#input
+
+script.
+    let editor = ace.edit("editor");
+    editor.setTheme("ace/theme/github");
+    editor.getSession().setMode("ace/mode/python");
+
+    // Enable Ace's autocompletion
+    ace.require("ace/ext/language_tools");
+    editor.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
+    });
+
+    // Configure Ace to use the Language Server Protocol
+    var languageTools = ace.require("ace/ext/language_tools");
+    var pythonCompleter = {
+        getCompletions: function(editor, session, pos, prefix, callback) {
+            // Implement logic to communicate with your language server
+            // You may need to send requests to the server for autocompletion suggestions
+            // and handle the responses here.
+            // Refer to the documentation of your language server for details.
+        }
+    };
+    languageTools.addCompleter(pythonCompleter);
+
+script
+    include ./scripts/skulpt/skulpt.min.js
+script
+    include ./scripts/skulpt/skulpt-stdlib.js
+script
+    include ./scripts/skulpt/skulpt.js
