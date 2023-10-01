@@ -12,11 +12,6 @@ const prisma = new PrismaClient()
 
 const PORT = 8080;
 
-let db = new sqlite3.Database('./data.db', (err) => {
-    if (err) return console.error(err.message);
-    else console.log('Connection to database succesfull.');
-});
-
 app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -38,7 +33,6 @@ app.post('/codedocs', async(req, res) => {
     let alreadyExists = await prisma.codedocs.findFirst({ where: { userid: req.body.userid, filename: req.body.filename } })
 
     if (!alreadyExists) {
-        console.log('creating record')
         await prisma.codedocs.create({
             data: {
                 id: nanoid(),
@@ -50,7 +44,6 @@ app.post('/codedocs', async(req, res) => {
         })
     } else {
         // update the record
-        console.log('updating record')
         await prisma.codedocs.update(
             {
                 where: { id: alreadyExists.id },
@@ -61,7 +54,7 @@ app.post('/codedocs', async(req, res) => {
         )
     }
 
-    res.send('codedoc saved')
+    res.send({ message: `${req.body.filename} saved` })
 })
 
 app.post('/events', async(req, res) => {
@@ -81,39 +74,32 @@ app.get('/signup', (req, res) => {
     res.render('signup');
 })
 
-app.post('/login', (req, res) => {
+app.post('/login', async(req, res) => {
     if (!req.body.email || !req.body.password) {
-        console.log('MADE IT IN HERE')
-        return res.render('login', { message: 'Invalid email / password combination' })
+        return res.render('login', { message: 'Please fill out all required fields' })
     }
 
-    // LOOK FOR USER IN DB BASED ON EMAIL
-    db.all(`SELECT * FROM users WHERE email = "${req.body.email}"`, [], (err, rows) => {
-        // IF ERROR WITH DB CONSOLE LOG ERROR
-        if (err) {
-            console.log(err.message)
-            return res.render('login', { message: 'Invalid email / password combination' });
+    // find user if exists
+    let user = await prisma.users.findFirst({
+        where: {
+            email: req.body.email
         }
-        else {
-            // CHECK IF USER'S ENTERED PASSWORD MATCHES PASSWORD HASH IN THE DB
-            const user = rows[0];
+    });
 
-            if (user) {
-                bcrypt.compare(req.body.password, user.passwordHash, (err, result) => {
-                    if (err) return res.render('login', { message: 'Invalid email / password combination' });
+    // if user exists, then try to log in based on password provided
+    if (user) {
+        let correctPassword = bcrypt.compare(req.body.password, user.passwordHash);
 
-                    if (result) {
-                        req.session.user = user;
-                        res.cookie('userid', user.id, { maxAge: 900000 })
-                    }
-                    else return res.render('login', { message: 'Invalid email / password combination' });
-                    return res.redirect('/');
-                })
-            } else {
-                return res.render('login', { message: 'Invalid email / password combination' });
-            }
+        if (correctPassword) {
+            req.session.user = user;
+            res.cookie(('userid', user.id, { maxAge: 900000 }));
+            return res.redirect('/')
+        } else {
+            return res.render('login', { message: "Invalid email / password combination" })
         }
-    })
+    }
+
+    return res.render('login', { message: "Invalid email / password combination" })
 })
 
 app.get('/logout', (req, res) => {

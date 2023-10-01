@@ -9,7 +9,7 @@ block content
             h2 Login
             if message
                 p.error=message
-            input(type="email" name="email" placeholder="email")
-            input(type="password" name="password" placeholder="********")
+            input(type="email" name="email" placeholder="email" autocomplete='email')
+            input(type="password" name="password" placeholder="********" autocomplete='password')
             button Login
             a(href="/signup") Don't have an account? Sign up

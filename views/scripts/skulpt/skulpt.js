@@ -87,6 +87,7 @@ async function logevent() {
     while(events.length > 0) {
         // get each event
         let evt = events.shift();
+
         // create data with event and user id
         const data = {
             "eventtype": JSON.stringify(evt),
@@ -169,4 +170,10 @@ async function save()
         },
         body: JSON.stringify(data)
     });
+}
+
+async function load() {
+    const dialog = document.querySelector('#load-file');
+
+    dialog.showModal()
 }

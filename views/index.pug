@@ -1,7 +1,8 @@
 extends layout.pug
 
 block content
-    style
-        include ./styles/main.css
-
     include ./repl.pug
+
+    dialog#load-file
+        div#load-file-content
+            h1 Load file
