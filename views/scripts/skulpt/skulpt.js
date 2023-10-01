@@ -65,20 +65,20 @@ async function generateEvent(type, code) {
 
     // create data with event and user id
     const data = {
-        "eventtype":evt,
+        "whichevent": type,
         "userid": userid,
-        "whichevent": type
+        "eventtype": JSON.stringify(evt)
     };
 
     // Make a request to server to save this event in the db
         // this endpoint can be found in server.js
-    // await fetch('/events', {
-    //     method: "POST",
-    //     headers: {
-    //         "content-type": "application/json"
-    //     },
-    //     body: data
-    // });
+    await fetch('/events', {
+        method: "POST",
+        headers: {
+            "content-type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
 }
 
 async function logevent() {
@@ -89,18 +89,18 @@ async function logevent() {
         let evt = events.shift();
         // create data with event and user id
         const data = {
-            "eventtype":evt,
+            "eventtype": JSON.stringify(evt),
             "userid": userid,
             "whichevent": "key"
         };
 
-        // await fetch('/events', {
-        //     method: "POST",
-        //     headers: {
-        //         "content-type": "application/json"
-        //     },
-        //     body: data
-        // });
+        await fetch('/events', {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
     }
 }
 
@@ -151,13 +151,9 @@ function runit() {
 
 async function save()
 {
-    //formData = new FormData();
     var file = document.getElementById('filename').value;
     var code = editor.getValue();
     var userid = getCookie('userid');
-    //console.log(userid);
-    //formData.append(file,code);
-    //const createdRecord = await pb.collection('codedocs').create(formData);
 
     const data = {
         "filename":file,

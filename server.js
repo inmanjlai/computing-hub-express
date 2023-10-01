@@ -5,8 +5,10 @@ import bcrypt from 'bcrypt'
 import session from 'express-session'
 import cookieParser from 'cookie-parser';
 import { nanoid } from 'nanoid';
+import { PrismaClient } from '@prisma/client'
 
 const app = express();
+const prisma = new PrismaClient()
 
 const PORT = 8080;
 
@@ -30,21 +32,44 @@ app.get('/', (req, res) => {
     res.render('index', { user: req.session.user });
 });
 
-app.post('/codedocs', (req, res) => {
-    db.run(`
-        INSERT INTO codedocs (id, filename, userid, code, created)
-        VALUES('${nanoid()}', '${req.body.filename}', '${req.body.userid}', "${req.body.code}", '${Date.now()}')
-    `, (err) => {
-        if (err) console.log(err)
-        else console.log('codedoc saved')
-    })
+app.post('/codedocs', async(req, res) => {
+
+    //check if codedoc already exists
+    let alreadyExists = await prisma.codedocs.findFirst({ where: { userid: req.body.userid, filename: req.body.filename } })
+
+    if (!alreadyExists) {
+        console.log('creating record')
+        await prisma.codedocs.create({
+            data: {
+                id: nanoid(),
+                code: req.body.code,
+                created: Date.now().toString(),
+                filename: req.body.filename,
+                userid: req.body.userid
+            }
+        })
+    } else {
+        // update the record
+        console.log('updating record')
+        await prisma.codedocs.update(
+            {
+                where: { id: alreadyExists.id },
+                data: {
+                    code: req.body.code
+                }
+            }
+        )
+    }
 
     res.send('codedoc saved')
 })
 
-// app.post('/events', (req, res) => {
-//     return res.send('event created');
-// });
+app.post('/events', async(req, res) => {
+    await prisma.events.create({
+        data: {...req.body, id: nanoid()}
+    })
+    return res.send('event created');
+});
 
 app.get('/login', (req, res) => {
     if (req.session.user) return res.redirect('/');
