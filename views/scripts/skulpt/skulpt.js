@@ -200,15 +200,29 @@ async function save()
 async function loadModal() {
     const dialog = document.querySelector('#load-file');
     const firstFilename = document.querySelector('#file-list p:first-child')
-
     const fileList = document.querySelectorAll('#file-list p');
+
+    let alreadyActiveFile = false
+    
     fileList.forEach((child) => {
-        child.classList.remove('active')
+        if (child.classList.contains('active')) alreadyActiveFile = true;
     })
 
-    firstFilename.classList.add('active')
+    if (!alreadyActiveFile) {
+        fileList.forEach((child) => {
+            child.classList.remove('active')
+        })
+    
+        firstFilename.classList.add('active')
+    }
 
     dialog.showModal()
+}
+
+function closeLoadModal() {
+    const dialog = document.querySelector('#load-file');
+
+    dialog.close()
 }
 
 async function loadFile() {

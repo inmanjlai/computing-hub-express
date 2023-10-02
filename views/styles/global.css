@@ -95,10 +95,11 @@ dialog::backdrop {
 
 #load-file h1 {
     padding: 0.5rem 1rem;
+    border-bottom: 1px solid #2d2d2d20;
 }
 
 #file-list {
-    border-top: 1px solid #2d2d2d;
+    border-right: 1px solid #2d2d2d20;
 }
 
 #file-list p {
@@ -113,24 +114,36 @@ dialog::backdrop {
 }
 
 #file-preview-code {
-    background-color: #2d2d2d;
-    color: palegreen;
+    background-color: white;
+    color: black;
     padding: 0.5rem;
     height: 100%;
     min-width: 300px;
 }
 
-#load-button {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    background-color: #6ef2a7;
+#load-file-controls {
+    display: flex;
+}
+
+#load-file-controls button {
+    flex-grow: 1;
     border: none;
-    border-radius: 50px;
     padding: 1rem;
-    font-size: 24px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+}
+
+#load-button {
+    background-color: #71d7e9;
+    color: black;
+    font-size: 24px;
+    border-bottom-right-radius: 5px;
+}
+
+#close-load-button {
+    background-color: #f26e6e;
+    color: white;
+    font-size: 24px;
+    border-bottom-left-radius: 5px;
 }
 
 @media screen and (max-width: 650px) {
