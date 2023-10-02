@@ -1,0 +1,44 @@
+#dashboard-page {
+    display: flex;
+    flex-grow: 1;
+}
+
+#dashboard-page > div {
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#pending-assignments {
+    border-right: 1px solid #2d2d2d20;
+}
+
+#dashboard-page > div > h3 {
+    padding: 1rem;
+    border-bottom: 1px solid #2d2d2d20;
+}
+
+#dashboard-page > div > p {
+    /* border: 1px solid #2d2d2d20; */
+    color: black;
+    border-bottom: 1px solid #2d2d2d20;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#dashboard-page > div > p:hover {
+    background-color: #836ca920;
+}
+
+@media screen and (max-width: 650px) {
+    #dashboard-page {
+        flex-direction: column;
+    }
+
+    #pending-assignments {
+        border-right: none;
+        border-bottom: 1px solid #2d2d2d20;
+    }
+}

@@ -152,9 +152,9 @@ function runit() {
 
 async function save()
 {
-    var file = document.getElementById('filename').value;
-    var code = editor.getValue();
-    var userid = getCookie('userid');
+    const file = document.getElementById('filename').value;
+    const code = editor.getValue();
+    const userid = getCookie('userid');
 
     if (file == '') {
         displayNotification('Please enter a filename before saving', 'error')
@@ -165,7 +165,7 @@ async function save()
             "userid": userid,
             "user": userid
         };
-    
+
         let response = await fetch('/codedocs', {
             method: "POST",
             headers: {
@@ -191,6 +191,11 @@ async function save()
             fileList.append(p)
         
         })
+        
+        localStorage.setItem('currentFile', JSON.stringify(responseJson.savedFile))
+        const codePreview = document.querySelector('#file-preview-code')
+
+        codePreview.innerHTML = responseJson.savedFile.code
 
         displayNotification(responseJson.message, 'alert')
     }

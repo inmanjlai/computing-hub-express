@@ -3,28 +3,32 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    /* border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
+    background-color: #836ca9;
     /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
 .logo {
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 600;
+    color: white;
 }
 
 nav ul a {
     padding: 0.5rem 1rem;
     border-radius: 5px;
     transition: background-color 0.3s;
+    color: white;
+    font-weight: 600;
 }
 
 nav ul a:hover {
-    background-color: #2d2d2d20;
+    background-color: #ffffff30;
 }
 
 @media screen and (max-width: 470px) {
     nav {
-        padding: 0.5rem;
+        padding: 1rem;
     }
 
     .logo {

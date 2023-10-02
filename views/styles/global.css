@@ -6,7 +6,7 @@
 
 body {
     min-height: 100vh;
-    font-family: 'Open Sans';
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
     display: flex;
     flex-direction: column;
@@ -70,7 +70,7 @@ dialog::backdrop {
 }
 
 .active {
-    background-color: #2d2d2d20;
+    background-color: #836ca940;
     font-weight: 600;
 }
 
@@ -87,6 +87,7 @@ dialog::backdrop {
 }
 
 #load-file-content {
+    min-height: 300px;
     display: flex;
     flex-grow: 1;
     width: 100%;
@@ -110,7 +111,7 @@ dialog::backdrop {
 }
 
 #file-list p:hover {
-    background-color: #2d2d2d10;
+    background-color: #836ca920;
 }
 
 #file-preview-code {
@@ -133,14 +134,14 @@ dialog::backdrop {
 }
 
 #load-button {
-    background-color: #71d7e9;
-    color: black;
+    background-color: #836ca9;
+    color: white;
     font-size: 24px;
     border-bottom-right-radius: 5px;
 }
 
 #close-load-button {
-    background-color: #f26e6e;
+    background-color: #2d2d2d;
     color: white;
     font-size: 24px;
     border-bottom-left-radius: 5px;

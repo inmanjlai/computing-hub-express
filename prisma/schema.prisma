@@ -7,54 +7,6 @@ datasource db {
   url      = "file:../data.db"
 }
 
-model admins {
-  id              String @id
-  avatar          Int    @default(0)
-  email           String @unique(map: "sqlite_autoindex__admins_2")
-  tokenKey        String @unique(map: "sqlite_autoindex__admins_3")
-  passwordHash    String
-  lastResetSentAt String @default("")
-  created         String @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  updated         String @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-
-  @@map("_admins")
-}
-
-model collections {
-  id            String              @id
-  system        Boolean             @default(false)
-  type          String              @default("base")
-  name          String              @unique(map: "sqlite_autoindex__collections_2")
-  schema        Unsupported("json") @default(dbgenerated("\"[]\""))
-  indexes       Unsupported("json") @default(dbgenerated("\"[]\""))
-  listRule      String?
-  viewRule      String?
-  createRule    String?
-  updateRule    String?
-  deleteRule    String?
-  options       Unsupported("json") @default(dbgenerated("\"{}\""))
-  created       String              @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  updated       String              @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  externalAuths externalAuths[]
-
-  @@map("_collections")
-}
-
-model externalAuths {
-  id           String      @id
-  collectionId String
-  recordId     String
-  provider     String
-  providerId   String
-  created      String      @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  updated      String      @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  collections  collections @relation(fields: [collectionId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerId], map: "_externalAuths_provider_providerId_idx")
-  @@unique([collectionId, recordId, provider], map: "_externalAuths_record_provider_idx")
-  @@map("_externalAuths")
-}
-
 model migrations {
   file    String @id
   applied Int
@@ -62,32 +14,11 @@ model migrations {
   @@map("_migrations")
 }
 
-model params {
-  id      String               @id
-  key     String               @unique(map: "sqlite_autoindex__params_2")
-  value   Unsupported("json")?
-  created String               @default("")
-  updated String               @default("")
-
-  @@map("_params")
-}
-
 model assignments {
-  created      String              @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  questions    Unsupported("json") @default(dbgenerated("'[]'"))
-  id           String              @id @default("'r'||lower(hex(randomblob(7)))")
-  title        String              @default("")
-  updated      String              @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  assigned_to  Unsupported("json") @default(dbgenerated("'[]'"))
-  submitted_by Unsupported("json") @default(dbgenerated("'[]'"))
-}
-
-model classes {
-  created  String              @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  id       String              @id @default("'r'||lower(hex(randomblob(7)))")
-  students Unsupported("json") @default(dbgenerated("'[]'"))
-  title    String              @default("")
-  updated  String              @default("strftime('%Y-%m-%d %H:%M:%fZ')")
+  id                   Int                    @id @default(autoincrement())
+  title                String
+  assignment_questions assignment_questions[]
+  user_assignments     user_assignments[]
 }
 
 model codedocs {
@@ -101,15 +32,6 @@ model codedocs {
   user     String @default("")
 }
 
-model coding_problems {
-  created     String  @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  description String  @default("")
-  id          String  @id @default("'r'||lower(hex(randomblob(7)))")
-  points      Decimal @default(0)
-  title       String  @default("")
-  updated     String  @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-}
-
 model events {
   created    String @default("strftime('%Y-%m-%d %H:%M:%fZ')")
   eventtype  String @default("")
@@ -120,18 +42,44 @@ model events {
 }
 
 model users {
-  avatar                 String  @default("")
-  created                String  @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  email                  String  @default("")
-  emailVisibility        Boolean @default(false)
-  id                     String  @id @default("'r'||lower(hex(randomblob(7)))")
-  lastResetSentAt        String  @default("")
-  lastVerificationSentAt String  @default("")
-  name                   String  @default("")
+  avatar                 String             @default("")
+  created                String             @default("strftime('%Y-%m-%d %H:%M:%fZ')")
+  email                  String             @default("")
+  emailVisibility        Boolean            @default(false)
+  id                     String             @id @default("'r'||lower(hex(randomblob(7)))")
+  lastResetSentAt        String             @default("")
+  lastVerificationSentAt String             @default("")
+  name                   String             @default("")
   passwordHash           String
-  tokenKey               String  @unique(map: "__pb_users_auth__tokenKey_idx")
-  updated                String  @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  username               String  @unique(map: "__pb_users_auth__username_idx")
-  verified               Boolean @default(false)
-  isAdmin                Boolean @default(false)
+  tokenKey               String             @unique(map: "__pb_users_auth__tokenKey_idx")
+  updated                String             @default("strftime('%Y-%m-%d %H:%M:%fZ')")
+  username               String             @unique(map: "__pb_users_auth__username_idx")
+  verified               Boolean            @default(false)
+  isAdmin                Boolean            @default(false)
+  user_assignments       user_assignments[]
+}
+
+model questions {
+  id                   Int                    @id @default(autoincrement())
+  title                String
+  description          String
+  points               Int
+  assignment_questions assignment_questions[]
+}
+
+model assignment_questions {
+  id            Int         @id @default(autoincrement())
+  question_id   Int
+  assignment_id Int
+  assignments   assignments @relation(fields: [assignment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  questions     questions   @relation(fields: [question_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model user_assignments {
+  id            Int         @id @default(autoincrement())
+  user_id       String
+  assignment_id Int
+  submitted     Int?
+  assignments   assignments @relation(fields: [assignment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users         users       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

@@ -1,7 +1,17 @@
 extends layout.pug
 
 block content
-    div#pending-assignments
-        h2 Pending Assignments
-    div#submitted-assignments
-        h2 Submitted Assignments
+    style
+        include ./styles/dashboard.css
+
+    div#dashboard-page
+        div#pending-assignments
+            h3 Pending Assignments
+            for assignment in assignments
+                if !assignment.submitted
+                    p=assignment.assignments.title
+        div#submitted-assignments
+            h3 Submitted Assignments
+            for assignment in assignments
+                if assignment.submitted
+                    p=assignment.assignments.title

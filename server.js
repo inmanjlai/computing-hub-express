@@ -43,7 +43,23 @@ app.get('/dashboard', async(req, res) => {
     if (!req.session.user) return res.redirect('/login');
 
     if (!req.session.user.isAdmin) {
-        return res.render('dashboard', { user: req.session.user })
+
+        const user = await prisma.users.findFirst({
+            where: {
+                id: req.session.user.id
+            },
+            include: {
+                user_assignments: {
+                    include: {
+                        assignments: true
+                    }
+                }
+            }
+        });
+
+        const assignments = user.user_assignments;
+
+        return res.render('dashboard', { user, assignments })
     } else {
         return res.render('admin_dashboard', { user: req.session.user })
     }
@@ -53,12 +69,10 @@ app.get('/dashboard', async(req, res) => {
 app.post('/codedocs', async(req, res) => {
 
     //check if codedoc already exists
-    console.log(req.body.userid, req.session.user.id)
-
     let alreadyExists = await prisma.codedocs.findFirst({ where: { userid: req.body.userid, filename: req.body.filename } })
 
     if (!alreadyExists) {
-        await prisma.codedocs.create({
+        const savedFile = await prisma.codedocs.create({
             data: {
                 id: nanoid(),
                 code: req.body.code,
@@ -66,10 +80,13 @@ app.post('/codedocs', async(req, res) => {
                 filename: req.body.filename,
                 userid: req.body.userid
             }
+            
         })
+        const files = await prisma.codedocs.findMany({ where: { userid: req.body.userid, problem: '', filename: { not: '' } }})
+        res.send({ message: `${req.body.filename} saved`, files, savedFile })
     } else {
         // update the record
-        await prisma.codedocs.update(
+        const savedFile = await prisma.codedocs.update(
             {
                 where: { id: alreadyExists.id },
                 data: {
@@ -77,10 +94,11 @@ app.post('/codedocs', async(req, res) => {
                 }
             }
         )
+
+        const files = await prisma.codedocs.findMany({ where: { userid: req.body.userid, problem: '', filename: { not: '' } }})
+        res.send({ message: `${req.body.filename} saved`, files, savedFile })
     }
 
-    const files = await prisma.codedocs.findMany({ where: { userid: req.body.userid, problem: '', filename: { not: '' } }})
-    res.send({ message: `${req.body.filename} saved`, files })
 })
 
 app.post('/events', async(req, res) => {
