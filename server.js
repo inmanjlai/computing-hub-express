@@ -38,6 +38,18 @@ app.get('/', async(req, res) => {
     res.render('index', { user: req.session.user, files });
 });
 
+app.get('/dashboard', async(req, res) => {
+
+    if (!req.session.user) return res.redirect('/login');
+
+    if (!req.session.user.isAdmin) {
+        return res.render('dashboard', { user: req.session.user })
+    } else {
+        return res.render('admin_dashboard', { user: req.session.user })
+    }
+
+});
+
 app.post('/codedocs', async(req, res) => {
 
     //check if codedoc already exists

@@ -23,6 +23,7 @@ html
             a.logo(href='/') Computing Hub
             ul.navigation-links
                 if user
+                    a(href='/dashboard') Dashboard
                     a(href='/logout') Logout
                 else
                     a(href='/login') Login
