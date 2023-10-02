@@ -41,6 +41,8 @@ app.get('/', async(req, res) => {
 app.post('/codedocs', async(req, res) => {
 
     //check if codedoc already exists
+    console.log(req.body.userid, req.session.user.id)
+
     let alreadyExists = await prisma.codedocs.findFirst({ where: { userid: req.body.userid, filename: req.body.filename } })
 
     if (!alreadyExists) {
@@ -65,7 +67,8 @@ app.post('/codedocs', async(req, res) => {
         )
     }
 
-    res.send({ message: `${req.body.filename} saved` })
+    const files = await prisma.codedocs.findMany({ where: { userid: req.body.userid, problem: '', filename: { not: '' } }})
+    res.send({ message: `${req.body.filename} saved`, files })
 })
 
 app.post('/events', async(req, res) => {
@@ -103,7 +106,7 @@ app.post('/login', async(req, res) => {
 
         if (correctPassword) {
             req.session.user = user;
-            res.cookie(('userid', user.id, { maxAge: 900000 }));
+            res.cookie('userid', user.id, { maxAge: 900000 })
             return res.redirect('/')
         } else {
             return res.render('login', { message: "Invalid email / password combination" })

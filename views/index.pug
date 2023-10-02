@@ -12,6 +12,6 @@ block content
                         p(onclick=`updatePreview(${JSON.stringify(file)})`)=file.filename
                 #file-preview
                     pre#file-preview-code=files[0].code
-                button#load-button
+                button#load-button(onclick='loadFile()')
                     span.material-symbols-rounded arrow_forward
                     

@@ -166,22 +166,59 @@ async function save()
             "user": userid
         };
     
-        await fetch('/codedocs', {
+        let response = await fetch('/codedocs', {
             method: "POST",
             headers: {
                 "content-type": "application/json"
             },
             body: JSON.stringify(data)
         });
+
+        let responseJson = await response.json();
+
+        // replace files under #file-list
+        const fileList = document.querySelector('#file-list');
+        fileList.innerHTML = ''
+
+        responseJson.files.forEach((file) => {
+
+            let p = document.createElement("p");
+            p.innerHTML = file.filename
+            p.addEventListener('click', (e) => {
+                updatePreview(file);
+            })
+
+            fileList.append(p)
+        
+        })
+
+        displayNotification(responseJson.message, 'alert')
     }
 
 }
 
-async function load() {
+async function loadModal() {
     const dialog = document.querySelector('#load-file');
     const firstFilename = document.querySelector('#file-list p:first-child')
+
+    const fileList = document.querySelectorAll('#file-list p');
+    fileList.forEach((child) => {
+        child.classList.remove('active')
+    })
 
     firstFilename.classList.add('active')
 
     dialog.showModal()
+}
+
+async function loadFile() {
+    const currentFile = localStorage.getItem('currentFile')
+
+    const filenameInput = document.querySelector('#filename');
+        
+    filenameInput.value = JSON.parse(currentFile).filename
+    editor.setValue(JSON.parse(currentFile).code)
+
+    const dialog = document.querySelector('#load-file');
+    dialog.close()
 }

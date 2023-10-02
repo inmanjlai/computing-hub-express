@@ -31,8 +31,12 @@ function updatePreview(file) {
     currentActiveFile.classList.remove('active')
 
     // make the clicked on file active
-    
+    const fileList = document.querySelectorAll('#file-list p');
+    fileList.forEach((child) => {
+        if (child.innerHTML == file.filename) child.classList.add('active')
+        else child.classList.remove('active')
+    })
 
-    localStorage.setItem('currentFile', file)
+    localStorage.setItem('currentFile', JSON.stringify(file))
     codePreview.innerText = file.code
 }

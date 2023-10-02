@@ -40,6 +40,8 @@ input, textarea, button, select {
     transition: transform 0.3s, opacity 0.3s;
     opacity: 0;
     pointer-events: none;
+    min-width: 311px;
+    z-index: 100;
 }
 
 
