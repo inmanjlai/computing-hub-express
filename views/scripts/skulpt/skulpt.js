@@ -264,4 +264,3 @@ async function saveQuestionForAssignment() {
     displayNotification(response.message, 'alert')
 }
 
-

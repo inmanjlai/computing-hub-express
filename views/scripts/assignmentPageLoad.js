@@ -15,5 +15,9 @@ document.addEventListener('DOMContentLoaded', async(e) => {
 
     const firstQuestionsCodedoc = await(await fetch(`/assignment_code/${userid}/${assignment_id}/${question_id}`)).json()
 
-    editor.session.setValue(firstQuestionsCodedoc.codedoc.code)  
+    if( firstQuestionsCodedoc.codedoc.code == '') {
+        editor.session.setValue(firstQuestionsCodedoc.question.description)
+    } else {
+        editor.session.setValue(firstQuestionsCodedoc.codedoc.code)  
+    }
 })

@@ -183,6 +183,21 @@ app.put('/assignments', async(req, res) => {
     }
 });
 
+app.post('/user_assignments/:user_assignment_id', async(req, res) => {
+    if (!req.session.user) return res.redirect('/login');
+
+    await prisma.user_assignments.update({
+        where: {
+            id: +req.params.user_assignment_id
+        },
+        data: {
+            submitted: 1
+        }
+    })
+
+    return res.redirect('/dashboard')
+})
+
 app.post('/events', async(req, res) => {
     await prisma.events.create({
         data: {...req.body, id: nanoid()}

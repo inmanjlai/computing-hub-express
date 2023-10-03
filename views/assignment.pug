@@ -13,9 +13,9 @@ block content
                 button(onclick="saveQuestionForAssignment()")
                     p Save
                     span.material-symbols-rounded cloud_download
-                button(onclick="runit()")
-                    p Submit
-                    span.material-symbols-rounded task_alt
+                form(method="POST", action=`/user_assignments/${currentAssignment.user_assignments[0].id}`)
+                    button Submit
+                        span.material-symbols-rounded task_alt
                 button#run-code(onclick="runit()")
                     p Run
                     span.material-symbols-rounded arrow_forward
