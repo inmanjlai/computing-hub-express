@@ -9,9 +9,11 @@ block content
             h3 Pending Assignments
             for assignment in assignments
                 if !assignment.submitted
-                    p=assignment.assignments.title
+                    form(action=`/assignment` method="POST") 
+                        input(type="hidden" value=`${assignment.assignments.id}` name='id')
+                        button#assignment-list-item=assignment.assignments.title
         div#submitted-assignments
             h3 Submitted Assignments
             for assignment in assignments
                 if assignment.submitted
-                    p=assignment.assignments.title
+                    p#assignment-list-item=assignment.assignments.title

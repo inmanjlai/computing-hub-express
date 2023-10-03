@@ -63,10 +63,11 @@ input, textarea, button, select {
 dialog {
     background-color: transparent;
     border: none;
+    width: 100%;
 }
 
 dialog::backdrop {
-    background-color: #2d2d2d40;
+    background-color: #2d2d2d80;
 }
 
 .active {
@@ -75,38 +76,41 @@ dialog::backdrop {
 }
 
 #load-file-content-container {
-    background-color: white;
-    border: 1px solid black;
+    /* background-color: white; */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    max-width: 1000px;
+    margin: auto;
+    /* display: flex; */
+    /* flex-direction: column; */
 }
 
 #load-file-content {
-    min-height: 300px;
     display: flex;
     flex-grow: 1;
-    width: 100%;
     position: relative;
 }
 
-#load-file h1 {
+#load-file h3 {
     padding: 0.5rem 1rem;
     border-bottom: 1px solid #2d2d2d20;
+    background-color: #836ca9;
+    color: white;
+    font-weight: 600;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
 }
 
 #file-list {
     border-right: 1px solid #2d2d2d20;
+    background-color: #eeeeee;
+    flex-grow: 1;
+    width: 50%;
 }
 
 #file-list p {
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     transition: background-color 0.3s;
-    min-width: 300px;
     cursor: pointer;
 }
 
@@ -114,12 +118,16 @@ dialog::backdrop {
     background-color: #836ca920;
 }
 
+#file-preview {
+    width: 50%;
+    flex-grow: 1;
+}
+
 #file-preview-code {
     background-color: white;
     color: black;
     padding: 0.5rem;
     height: 100%;
-    min-width: 300px;
 }
 
 #load-file-controls {
@@ -127,26 +135,37 @@ dialog::backdrop {
 }
 
 #load-file-controls button {
+    width: 50%;
     flex-grow: 1;
     border: none;
     padding: 1rem;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s;
 }
 
 #load-button {
     background-color: #836ca9;
     color: white;
-    font-size: 24px;
     border-bottom-right-radius: 5px;
+}
+
+#load-button:hover {
+    background-color: #a288cb;
 }
 
 #close-load-button {
     background-color: #2d2d2d;
     color: white;
-    font-size: 24px;
     border-bottom-left-radius: 5px;
 }
 
+#close-load-button:hover {
+    background-color: #434343;
+}
 @media screen and (max-width: 650px) {
     #file-preview {
         display: none;

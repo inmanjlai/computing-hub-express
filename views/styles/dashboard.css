@@ -19,16 +19,20 @@
     border-bottom: 1px solid #2d2d2d20;
 }
 
-#dashboard-page > div > p {
+#assignment-list-item {
     /* border: 1px solid #2d2d2d20; */
     color: black;
+    border: none;
     border-bottom: 1px solid #2d2d2d20;
     padding: 0.5rem 1rem;
     cursor: pointer;
     transition: background-color 0.3s;
+    background-color: transparent;
+    width: 100%;
+    text-align: start;
 }
 
-#dashboard-page > div > p:hover {
+#assignment-list-item:hover {
     background-color: #836ca920;
 }
 

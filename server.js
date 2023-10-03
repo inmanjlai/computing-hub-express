@@ -100,6 +100,30 @@ app.post('/codedocs', async(req, res) => {
 
 })
 
+app.post('/assignment', async(req, res) => {
+    if (!req.session.user) return res.redirect('/')
+
+    console.log(req.body, "HERE")
+
+    const currentAssignment = await prisma.assignments.findFirst({ where: { id: +req.body.id },
+        include: {
+            user_assignments: true,
+            assignment_questions: {
+                include: { 
+                    questions: true
+                }
+            }
+        }
+    })
+
+    console.log(currentAssignment)
+
+    if (!currentAssignment.user_assignments.submitted) {
+        return res.render('assignment', { currentAssignment, user: req.session.user })
+    }
+
+});
+
 app.post('/events', async(req, res) => {
     await prisma.events.create({
         data: {...req.body, id: nanoid()}

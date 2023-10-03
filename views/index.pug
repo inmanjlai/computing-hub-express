@@ -5,7 +5,7 @@ block content
 
     dialog#load-file
         div#load-file-content-container
-            h1 Load file
+            h3 Load file
             div#load-file-content
                 div#file-list
                     for file in files 
@@ -13,8 +13,8 @@ block content
                 div#file-preview
                     pre#file-preview-code=files[0].code
             div#load-file-controls
-                button#close-load-button(onclick='closeLoadModal()')
+                button#close-load-button(onclick='closeLoadModal()') Cancel
                     span.material-symbols-rounded close
-                button#load-button(onclick='loadFile()')
+                button#load-button(onclick='loadFile()') Load File
                     span.material-symbols-rounded arrow_forward
                     

@@ -1,0 +1,37 @@
+extends layout.pug 
+
+block content
+    style
+        include ./styles/repl.css
+        include ./styles/assignment.css
+
+    div.repl
+        div.controls
+            input#filename(type='text' placeholder='app.py' name='filename' disabled readonly value=`${currentAssignment.title}`)
+                        
+            div.controls-buttons
+                button(onclick="save()")
+                    p Save
+                    span.material-symbols-rounded cloud_download
+                button#run-code(onclick="runit()")
+                    p Run
+                    span.material-symbols-rounded arrow_forward
+
+        div#question-list
+            for question in currentAssignment.assignment_questions
+                div#question
+                    p=question.questions.title
+        div.ide
+            div#editor
+            div#output-container
+                pre#output
+                textarea#input
+
+    script
+        include ./scripts/editor/editor.js
+    script
+        include ./scripts/skulpt/skulpt.min.js
+    script
+        include ./scripts/skulpt/skulpt-stdlib.js
+    script
+        include ./scripts/skulpt/skulpt.js

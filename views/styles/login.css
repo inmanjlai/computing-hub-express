@@ -5,6 +5,10 @@
     justify-content: center;
 }
 
+.login-page h2 {
+    color: #836ca9;
+}
+
 .login-page form {
     display: flex;
     flex-direction: column;
@@ -32,6 +36,10 @@
     background-color: #2d2d2d;
     color: white;
     cursor: pointer;
+}
+
+.login-page a {
+    color: #2d2d2d;
 }
 
 .login-page a:hover {

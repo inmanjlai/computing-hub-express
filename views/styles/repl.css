@@ -32,9 +32,9 @@
     align-items: center;
     padding: 0.5rem 1rem;
     border: none;
-    background-color: ghostwhite;
-    color: black;
-    border: 1px solid #2d2d2d;
+    background-color: #836ca920;
+    color: #836ca9;
+    border: none;
     gap: 0.5rem;
     border-radius: 5px;
     cursor: pointer;
@@ -42,13 +42,17 @@
 }
 
 .controls button:hover {
-    background-color: #2d2d2d20;
+    background-color: #836ca940;
 }
 
 #run-code {
     background-color: #836ca9;
-    border: 1px solid #836ca9;
+    border: none;
     color: white;
+}
+
+#run-code:hover {
+    background-color: #a288cb;
 }
 
 /* #run-code:hover {
@@ -86,7 +90,7 @@ span.material-symbols-rounded{
     background-color: #2d2d2d;
     height: 100%;
     width: 100%;
-    color: palegreen;
+    color: #e3d2ff;
     padding: 0.5rem;
     overflow: auto;
     border-top-right-radius: 5px;

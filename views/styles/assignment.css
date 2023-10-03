@@ -1,0 +1,29 @@
+#question-list {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+}
+
+#question {
+    background-color: #836ca920;
+    border: #836ca9;
+    color: #836ca9;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#question:hover {
+    background-color: #836ca940;
+}
+
+#question:nth-child(2) {
+    background-color: #836ca9;
+    color: white;
+}
+
+#question.active {
+    background-color: #836ca9;
+    color: white;
+}
