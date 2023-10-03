@@ -22,7 +22,8 @@
 .controls input {
     padding: 0.5rem 1rem;
     border: none;
-    background-color: #2d2d2d20;
+    background-color: white;
+    border: 1px solid #2d2d2d40;
     flex-grow: 1;
     border-radius: 5px;
 }
@@ -79,7 +80,7 @@ span.material-symbols-rounded{
 
 #editor {
     border-radius: 0;
-    border: 1px solid #2d2d2d;
+    border: 1px solid #2d2d2d40;
     resize: none;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
