@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { application } from 'express'
 import bodyParser from 'body-parser';
 import bcrypt from 'bcrypt'
 import session from 'express-session'
@@ -103,8 +103,6 @@ app.post('/codedocs', async(req, res) => {
 app.post('/assignment', async(req, res) => {
     if (!req.session.user) return res.redirect('/')
 
-    console.log(req.body, "HERE")
-
     const currentAssignment = await prisma.assignments.findFirst({ where: { id: +req.body.id },
         include: {
             user_assignments: true,
@@ -116,12 +114,73 @@ app.post('/assignment', async(req, res) => {
         }
     })
 
-    console.log(currentAssignment)
-
     if (!currentAssignment.user_assignments.submitted) {
         return res.render('assignment', { currentAssignment, user: req.session.user })
     }
 
+});
+
+app.get('/assignment_code/:userid/:assignmentid/:questionid', async(req, res) => {
+    const question = await prisma.questions.findFirst({ where: {
+        id: +req.params.questionid
+    }})
+
+    const codedocExists = await prisma.codedocs.findFirst({ where: {
+        userid: req.params.userid,
+        problem: req.params.questionid,
+        assignment_id: +req.params.assignmentid
+    } })
+
+    if (codedocExists) {
+        return res.send({codedoc: codedocExists, question, message: 'codedoc already exists'})
+    } else {
+        const createCodedoc = await prisma.codedocs.create({ 
+            data: {
+                id: nanoid(),
+                userid: req.params.userid,
+                problem: req.params.questionid,
+                filename: `${req.params.userid}:${question.title}`,
+                created: Date.now().toLocaleString(),
+                assignment_id: +req.params.assignmentid
+            }
+         })
+
+         return res.send({codedoc: createCodedoc, question, message: 'codedoc created'})
+    }
+});
+
+app.put('/assignments', async(req, res) => {
+
+    if (!req.session.user) return res.redirect('/login')
+
+    const codedocToUpdate = await prisma.codedocs.findFirst({
+        where: {
+            userid: req.body.userid,
+            problem: req.body.question_id.toString(),
+            assignment_id: req.body.assignment_id
+        }
+    })
+
+    if (codedocToUpdate) {
+        await prisma.codedocs.update({ 
+            where: {
+                id: codedocToUpdate.id
+            },
+            data: {
+                code: req.body.code
+            }
+        })
+
+        const question = await prisma.questions.findFirst({
+            where: {
+                id: req.body.question_id
+            }
+        })
+
+        return res.send({ message: `${question.title} saved`})
+    } else {
+        return res.send({ message: "ERROR: codedoc does not exist"})
+    }
 });
 
 app.post('/events', async(req, res) => {

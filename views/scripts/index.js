@@ -1,5 +1,4 @@
 // GLOBAL SCRIPTING TO BE DONE HERE
-
 function displayNotification (message, type) {
 
     const notification = document.querySelector('#notification')
@@ -39,4 +38,31 @@ function updatePreview(file) {
 
     localStorage.setItem('currentFile', JSON.stringify(file))
     codePreview.innerText = file.code
+}
+
+async function updateAssignmentRepl(question) {
+    const userid = getCookie('userid')
+
+    const response = await (await fetch(`/assignment_code/${userid}/${question.assignment_id}/${question.question_id}`)).json();
+
+    localStorage.setItem('currentQuestion', JSON.stringify({question}))
+
+    document.querySelector('#question.active').classList.remove('active')
+
+    let selectedQuestion;
+    const allQuestions = document.querySelectorAll('#question');
+    allQuestions.forEach((child) => {
+        let childsQuestion = JSON.parse(child.getAttribute('data-question'))
+        if (childsQuestion.id == question.id) {
+            selectedQuestion = child
+        }
+    })
+
+    selectedQuestion.classList.add('active')
+
+    if (response.codedoc.code == '') {
+        editor.session.setValue(`# ${response.question.description}\n`)
+    } else {
+        editor.session.setValue(response.codedoc.code)
+    }
 }

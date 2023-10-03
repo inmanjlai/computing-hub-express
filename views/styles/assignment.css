@@ -18,11 +18,6 @@
     background-color: #836ca940;
 }
 
-#question:nth-child(2) {
-    background-color: #836ca9;
-    color: white;
-}
-
 #question.active {
     background-color: #836ca9;
     color: white;

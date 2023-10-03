@@ -10,17 +10,19 @@ block content
             input#filename(type='text' placeholder='app.py' name='filename' disabled readonly value=`${currentAssignment.title}`)
                         
             div.controls-buttons
-                button(onclick="save()")
+                button(onclick="saveQuestionForAssignment()")
                     p Save
                     span.material-symbols-rounded cloud_download
+                button(onclick="runit()")
+                    p Submit
+                    span.material-symbols-rounded task_alt
                 button#run-code(onclick="runit()")
                     p Run
                     span.material-symbols-rounded arrow_forward
 
         div#question-list
             for question in currentAssignment.assignment_questions
-                div#question
-                    p=question.questions.title
+                button(data-question=`${JSON.stringify(question)}` onclick=`updateAssignmentRepl(${JSON.stringify(question)})`)#question=question.questions.title
         div.ide
             div#editor
             div#output-container
@@ -35,3 +37,5 @@ block content
         include ./scripts/skulpt/skulpt-stdlib.js
     script
         include ./scripts/skulpt/skulpt.js
+    script 
+        include ./scripts/assignmentPageLoad.js

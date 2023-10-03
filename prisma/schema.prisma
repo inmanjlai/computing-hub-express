@@ -22,14 +22,15 @@ model assignments {
 }
 
 model codedocs {
-  code     String @default("")
-  created  String @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  filename String @default("")
-  id       String @id @default("'r'||lower(hex(randomblob(7)))")
-  updated  String @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  userid   String @default("")
-  problem  String @default("")
-  user     String @default("")
+  code          String @default("")
+  created       String @default("strftime('%Y-%m-%d %H:%M:%fZ')")
+  filename      String @default("")
+  id            String @id @default("'r'||lower(hex(randomblob(7)))")
+  updated       String @default("strftime('%Y-%m-%d %H:%M:%fZ')")
+  userid        String @default("")
+  problem       String @default("")
+  user          String @default("")
+  assignment_id Int?
 }
 
 model events {

@@ -236,8 +236,32 @@ async function loadFile() {
     const filenameInput = document.querySelector('#filename');
         
     filenameInput.value = JSON.parse(currentFile).filename
-    editor.setValue(JSON.parse(currentFile).code)
+    editor.session.setValue(JSON.parse(currentFile).code)
 
     const dialog = document.querySelector('#load-file');
     dialog.close()
 }
+
+async function saveQuestionForAssignment() {
+    const userid = getCookie('userid');
+    const code = editor.session.getValue();
+
+    const currentQuestion = JSON.parse(localStorage.getItem('currentQuestion'))
+
+    const data = {
+        userid,
+        question_id: currentQuestion.question.question_id,
+        assignment_id: currentQuestion.question.assignment_id,
+        code
+    }
+
+    let response = await (await fetch('/assignments', {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(data)
+    })).json()
+
+    displayNotification(response.message, 'alert')
+}
+
+
