@@ -8,14 +8,14 @@ function displayNotification (message, type) {
     else notification.classList.add('alert')
 
     notification.classList.add('show')
-        
+
     setTimeout(() => {
         notification.classList.remove('show')
-        if (type == 'error') { 
+        if (type == 'error') {
             notification.classList.remove('alert')
             notification.classList.remove('error')
         }
-        else { 
+        else {
             notification.classList.remove('error')
             notification.classList.remove('alert')
         }
@@ -45,7 +45,7 @@ async function updateAssignmentRepl(question) {
 
     const response = await (await fetch(`/assignment_code/${userid}/${question.assignment_id}/${question.question_id}`)).json();
 
-    localStorage.setItem('currentQuestion', JSON.stringify({question}))
+    localStorage.setItem('currentQuestion', JSON.stringify(question))
 
     document.querySelector('#question.active').classList.remove('active')
 

@@ -107,7 +107,7 @@ app.post('/assignment', async(req, res) => {
         include: {
             user_assignments: true,
             assignment_questions: {
-                include: { 
+                include: {
                     questions: true
                 }
             }
@@ -134,7 +134,7 @@ app.get('/assignment_code/:userid/:assignmentid/:questionid', async(req, res) =>
     if (codedocExists) {
         return res.send({codedoc: codedocExists, question, message: 'codedoc already exists'})
     } else {
-        const createCodedoc = await prisma.codedocs.create({ 
+        const createCodedoc = await prisma.codedocs.create({
             data: {
                 id: nanoid(),
                 userid: req.params.userid,
@@ -150,8 +150,9 @@ app.get('/assignment_code/:userid/:assignmentid/:questionid', async(req, res) =>
 });
 
 app.put('/assignments', async(req, res) => {
-
     if (!req.session.user) return res.redirect('/login')
+
+    console.log(req.body)
 
     const codedocToUpdate = await prisma.codedocs.findFirst({
         where: {
@@ -162,7 +163,7 @@ app.put('/assignments', async(req, res) => {
     })
 
     if (codedocToUpdate) {
-        await prisma.codedocs.update({ 
+        await prisma.codedocs.update({
             where: {
                 id: codedocToUpdate.id
             },

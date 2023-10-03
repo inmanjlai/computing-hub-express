@@ -189,9 +189,9 @@ async function save()
             })
 
             fileList.append(p)
-        
+
         })
-        
+
         localStorage.setItem('currentFile', JSON.stringify(responseJson.savedFile))
         const codePreview = document.querySelector('#file-preview-code')
 
@@ -208,7 +208,7 @@ async function loadModal() {
     const fileList = document.querySelectorAll('#file-list p');
 
     let alreadyActiveFile = false
-    
+
     fileList.forEach((child) => {
         if (child.classList.contains('active')) alreadyActiveFile = true;
     })
@@ -217,7 +217,7 @@ async function loadModal() {
         fileList.forEach((child) => {
             child.classList.remove('active')
         })
-    
+
         firstFilename.classList.add('active')
     }
 
@@ -234,7 +234,7 @@ async function loadFile() {
     const currentFile = localStorage.getItem('currentFile')
 
     const filenameInput = document.querySelector('#filename');
-        
+
     filenameInput.value = JSON.parse(currentFile).filename
     editor.session.setValue(JSON.parse(currentFile).code)
 
@@ -250,8 +250,8 @@ async function saveQuestionForAssignment() {
 
     const data = {
         userid,
-        question_id: currentQuestion.question.question_id,
-        assignment_id: currentQuestion.question.assignment_id,
+        question_id: currentQuestion.question_id,
+        assignment_id: currentQuestion.assignment_id,
         code
     }
 
@@ -263,4 +263,3 @@ async function saveQuestionForAssignment() {
 
     displayNotification(response.message, 'alert')
 }
-

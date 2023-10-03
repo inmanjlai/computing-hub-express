@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', async(e) => {
     const question = JSON.parse(firstQuestion.getAttribute('data-question'))
     localStorage.setItem('currentQuestion', firstQuestion.getAttribute('data-question'));
 
+    console.log(question)
+
     const userid = getCookie('userid');
 
     const assignment_id = question.assignment_id
@@ -18,6 +20,6 @@ document.addEventListener('DOMContentLoaded', async(e) => {
     if( firstQuestionsCodedoc.codedoc.code == '') {
         editor.session.setValue(firstQuestionsCodedoc.question.description)
     } else {
-        editor.session.setValue(firstQuestionsCodedoc.codedoc.code)  
+        editor.session.setValue(firstQuestionsCodedoc.codedoc.code)
     }
 })
