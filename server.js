@@ -1,5 +1,4 @@
 import express from 'express'
-import sqlite3 from 'sqlite3'
 import bodyParser from 'body-parser';
 import bcrypt from 'bcrypt'
 import session from 'express-session'
@@ -80,7 +79,7 @@ app.post('/codedocs', async(req, res) => {
                 filename: req.body.filename,
                 userid: req.body.userid
             }
-            
+
         })
         const files = await prisma.codedocs.findMany({ where: { userid: req.body.userid, problem: '', filename: { not: '' } }})
         res.send({ message: `${req.body.filename} saved`, files, savedFile })

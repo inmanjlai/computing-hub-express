@@ -1,6 +1,6 @@
 html
     head
-        title="{ Computing Hub }"
+        title Computing Hub
 
         //- GOOGLE FONTS IMPORT
         link(rel="preconnect" href="https://fonts.googleapis.com")
@@ -22,11 +22,11 @@ html
             include ./styles/nav.css
     body
         nav
-            a.logo(href='/')="<> Computing Hub "
+            a.logo(href='/')="<Computing Hub/>"
             ul.navigation-links
                 if user
                     a(href='/dashboard') Dashboard
-                    a(href='/logout') Logout
+                    a#logout-button(href='/logout') Logout
                 else
                     a(href='/login') Login
                     a(href='/signup') Sign up

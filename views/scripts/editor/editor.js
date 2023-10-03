@@ -1,5 +1,5 @@
 let editor = ace.edit("editor");
-editor.setTheme("ace/theme/github");
+editor.setTheme("ace/theme/tomorrow");
 editor.getSession().setMode("ace/mode/python");
 
 // Enable Ace's autocompletion

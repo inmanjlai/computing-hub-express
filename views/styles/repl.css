@@ -109,6 +109,10 @@ span.material-symbols-rounded{
         flex-direction: column;
     }
 
+    .controls {
+        gap: 0.5rem;
+    }
+
     #editor {
         border-bottom-left-radius: 0;
         border-top-right-radius: 5px;
@@ -125,6 +129,10 @@ span.material-symbols-rounded{
 
     .controls button p {
         display: none;
+    }
+
+    .repl {
+        gap: 0.5rem;
     }
 }
 
