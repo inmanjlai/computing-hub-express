@@ -66,3 +66,13 @@ async function updateAssignmentRepl(question) {
         editor.session.setValue(response.codedoc.code)
     }
 }
+
+function openSubmitDialog() {
+    const dialog = document.querySelector('#submit-assignment');
+    dialog.showModal();
+}
+
+function closeSubmitDialog() {
+    const dialog = document.querySelector('#submit-assignment');
+    dialog.close();
+}

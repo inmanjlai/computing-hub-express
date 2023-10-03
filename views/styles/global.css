@@ -42,6 +42,7 @@ input, textarea, button, select {
     pointer-events: none;
     min-width: 311px;
     z-index: 100;
+    text-align: center;
 }
 
 

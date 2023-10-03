@@ -13,9 +13,12 @@ block content
                 button(onclick="saveQuestionForAssignment()")
                     p Save
                     span.material-symbols-rounded cloud_download
-                form(method="POST", action=`/user_assignments/${currentAssignment.user_assignments[0].id}`)
+                //- form(method="POST", action=`/user_assignments/${currentAssignment.user_assignments[0].id}`)
                     button Submit
                         span.material-symbols-rounded task_alt
+                button(onclick="openSubmitDialog()")
+                    p Submit
+                    span.material-symbols-rounded task_alt
                 button#run-code(onclick="runit()")
                     p Run
                     span.material-symbols-rounded arrow_forward
@@ -28,6 +31,18 @@ block content
             div#output-container
                 pre#output
                 textarea#input
+        
+        dialog#submit-assignment
+            div#submit-dialog-content
+                span.material-symbols-rounded warning
+                h3 Are you sure?
+                p Once you submit this assignment, you will <strong>NOT</strong> be able to work on it again.
+                div#submit-dialog-controls
+                    button(onclick="closeSubmitDialog()") Cancel
+                    form(method="POST", action=`/user_assignments/${currentAssignment.user_assignments[0].id}`)
+                        button Submit
+                            span.material-symbols-rounded task_alt
+                
 
     script
         include ./scripts/editor/editor.js

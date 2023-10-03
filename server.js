@@ -152,8 +152,6 @@ app.get('/assignment_code/:userid/:assignmentid/:questionid', async(req, res) =>
 app.put('/assignments', async(req, res) => {
     if (!req.session.user) return res.redirect('/login')
 
-    console.log(req.body)
-
     const codedocToUpdate = await prisma.codedocs.findFirst({
         where: {
             userid: req.body.userid,

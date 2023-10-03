@@ -22,3 +22,69 @@
     background-color: #836ca9;
     color: white;
 }
+
+#submit-dialog-content {
+    margin: auto;
+    max-width: 500px;
+    background-color: white;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#submit-dialog-content p {
+    text-align: center;
+}
+
+#submit-dialog-content > span.material-symbols-rounded {
+    font-size: 64px;
+    color: #ffbe4e;
+}
+
+#submit-dialog-controls {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+}
+
+#submit-dialog-controls button {
+    width: 100%;
+    flex-grow: 1;
+    background-color: #2d2d2d;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+} 
+
+#submit-dialog-controls button:hover {
+    background-color: #434343;
+}
+
+#submit-dialog-controls form {
+    width: 100%;
+    flex-grow: 1;
+}
+
+#submit-dialog-controls form button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #836ca9;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    gap: 0.5rem;
+}
+
+#submit-dialog-controls form button:hover {
+    background-color: #a288cb;
+}
