@@ -242,6 +242,28 @@ app.post('/login', async(req, res) => {
     return res.render('login', { message: "Invalid email / password combination" })
 })
 
+app.post('/signup', async(req, res) => {
+    if (req.body.password != req.body['confirm-password']) return res.render('signup', {message: 'Both password fields must match'})
+
+    bcrypt.hash(req.body.password, 10, async(err, hash) => {
+        if (err) return res.render('signup', {message: err})
+        let passwordHash = hash;
+        let createdUser = await prisma.users.create({
+            data: {
+                id: nanoid(),
+                username: req.body.username,
+                name: req.body.name,
+                email: req.body.email,
+                passwordHash: passwordHash
+            }
+        })
+
+        req.session.user = createdUser;
+        res.cookie('userid', req.session.user.id, { maxAge: 900000 })
+        return res.redirect('/')
+    })
+})
+
 app.get('/logout', (req, res) => {
     req.session.destroy();
     res.clearCookie('userid');

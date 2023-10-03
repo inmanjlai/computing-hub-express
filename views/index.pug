@@ -8,13 +8,24 @@ block content
             h3 Load file
             div#load-file-content
                 div#file-list
-                    for file in files 
-                        p(onclick=`updatePreview(${JSON.stringify(file)})`)=file.filename
+                    if files.length > 0
+                        for file in files 
+                            p(onclick=`updatePreview(${JSON.stringify(file)})`)=file.filename
+                    else
+                        p No files saved yet
                 div#file-preview
-                    pre#file-preview-code=files[0].code
+                    if files.length > 0
+                        pre#file-preview-code=files[0].code
+                    else
+                        pre#file-preview-code
             div#load-file-controls
-                button#close-load-button(onclick='closeLoadModal()') Cancel
-                    span.material-symbols-rounded close
-                button#load-button(onclick='loadFile()') Load File
-                    span.material-symbols-rounded arrow_forward
-                    
+                if files.length > 0
+                    button#close-load-button(onclick='closeLoadModal()') Cancel
+                        span.material-symbols-rounded close
+                    button#load-button(onclick='loadFile()') Load File
+                        span.material-symbols-rounded arrow_forward
+                else 
+                    button#close-load-button(onclick='closeLoadModal()') Cancel
+                        span.material-symbols-rounded close
+                    button#load-button(onclick='loadFile()' disabled) Load File
+                        span.material-symbols-rounded arrow_forward

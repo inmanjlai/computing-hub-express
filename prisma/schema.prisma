@@ -43,20 +43,12 @@ model events {
 }
 
 model users {
-  avatar                 String             @default("")
-  created                String             @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  email                  String             @default("")
-  emailVisibility        Boolean            @default(false)
-  id                     String             @id @default("'r'||lower(hex(randomblob(7)))")
-  lastResetSentAt        String             @default("")
-  lastVerificationSentAt String             @default("")
-  name                   String             @default("")
-  passwordHash           String
-  tokenKey               String             @unique(map: "__pb_users_auth__tokenKey_idx")
-  updated                String             @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  username               String             @unique(map: "__pb_users_auth__username_idx")
-  verified               Boolean            @default(false)
-  isAdmin                Boolean            @default(false)
+  id                     String  @id @default("'r'||lower(hex(randomblob(7)))")
+  name                   String?
+  email                  String?
+  passwordHash           String?
+  username               String?
+  isAdmin                Boolean @default(false)
   user_assignments       user_assignments[]
 }
 
@@ -82,5 +74,23 @@ model user_assignments {
   assignment_id Int
   submitted     Int?
   assignments   assignments @relation(fields: [assignment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users         users       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users         users   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model users_old {
+  avatar                 String             @default("")
+  created                String             @default("strftime('%Y-%m-%d %H:%M:%fZ')")
+  email                  String             @default("")
+  emailVisibility        Boolean            @default(false)
+  id                     String             @id @default("'r'||lower(hex(randomblob(7)))")
+  lastResetSentAt        String             @default("")
+  lastVerificationSentAt String             @default("")
+  name                   String             @default("")
+  passwordHash           String
+  tokenKey               String             @unique(map: "__pb_users_auth__tokenKey_idx")
+  updated                String             @default("strftime('%Y-%m-%d %H:%M:%fZ')")
+  username               String             @unique(map: "__pb_users_auth__username_idx")
+  verified               Boolean            @default(false)
+  isAdmin                Boolean            @default(false)
+  // user_assignments       user_assignments[]
 }
