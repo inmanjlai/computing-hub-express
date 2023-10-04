@@ -1,4 +1,27 @@
 extends layout.pug
 
 block content
-    h1 Admin Dashboard
+    style
+        include ./styles/admin-dashboard.css
+
+    div#admin-page
+        div#left
+            div#all-assignments
+                h3 Assignments
+                div#assignment-list
+                    for assignment in assignments
+                        p#assignment=assignment.title
+            div#all-questions
+                h3 Questions
+                div#question-list
+                    for question in questions
+                        div#question
+                            p=question.title
+        div#right
+            h3 Submissions
+            div#student-submissions
+                each submission, assignment in submissions
+                    details
+                        summary=` ${assignment}`
+                        each user_submission in submission
+                            p=user_submission.users.name

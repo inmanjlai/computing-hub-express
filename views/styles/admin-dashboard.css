@@ -1,0 +1,98 @@
+details summary::marker {
+    content: '\f0d7';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    padding-right: 0.5rem;
+}
+
+details[open] summary::marker {
+    content: '\f0d8';
+}
+
+#admin-page {
+    display: flex;
+    flex-grow: 1;
+}
+
+#left {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border-right: 1px solid #2d2d2d40;
+    max-width: 30%;
+}
+
+#all-assignments {
+    flex-grow: 1;
+    background-color: white;
+    overflow-y: auto;
+}
+
+#all-questions {
+    flex-grow: 1;
+    background-color: white;
+    overflow-y: auto;
+}
+
+#question-list > p, #assignment-list > p {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #2d2d2d20;
+}
+
+#right {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+#all-questions h3 {
+    border-top: 1px solid #2d2d2d40;
+}
+
+h3 {
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    background-color: ghostwhite;
+    border-bottom: 1px solid #2d2d2d40;
+}
+
+#right details summary {
+    border-bottom: 1px solid #2d2d2d20;
+    padding: 0.5rem 1rem;
+    background-color: white;
+}
+
+details {
+    background-color: #2d2d2d10;
+}
+
+details p {
+    padding: 0.5rem 1rem;
+}
+
+#question-list div {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #2d2d2d20;
+    gap: 0.5rem;
+}
+
+#question-list p {
+    padding: 0.5rem 1rem;
+}
+
+.light-text {
+    color: #2d2d2d40;
+}
+
+@media screen and (max-width: 850px) {
+
+    #left {
+        max-width: none;
+    }
+
+    #admin-page {
+        flex-direction: column;
+    }
+}

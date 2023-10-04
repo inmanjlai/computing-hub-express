@@ -60,7 +60,29 @@ app.get('/dashboard', async(req, res) => {
 
         return res.render('dashboard', { user, assignments })
     } else {
-        return res.render('admin_dashboard', { user: req.session.user })
+
+        const assignments = await prisma.assignments.findMany();
+        const questions = await prisma.questions.findMany();
+        const submissionsPreSorted = await prisma.user_assignments.findMany({
+            where: {
+                submitted: 1
+            },
+            include: {
+                assignments: true,
+                users: true
+            }
+        })
+
+        let submissions = {}
+        for (let submission of submissionsPreSorted) {
+            if (submissions[submission.assignments.title] == undefined) {
+                submissions[submission.assignments.title] = [submission]
+            } else {
+                submissions[submission.assignments.title].push(submission)
+            }
+        }
+
+        return res.render('admin_dashboard', { user: req.session.user, assignments, questions, submissions })
     }
 
 });
