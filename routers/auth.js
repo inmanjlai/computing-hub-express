@@ -34,7 +34,7 @@ app.post('/login', async(req, res) => {
 
     // if user exists, then try to log in based on password provided
     if (user) {
-        let correctPassword = bcrypt.compare(req.body.password, user.passwordHash);
+        let correctPassword = await bcrypt.compare(req.body.password, user.passwordHash);
 
         if (correctPassword) {
             req.session.user = user;
