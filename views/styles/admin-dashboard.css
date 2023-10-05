@@ -6,7 +6,7 @@ details summary::marker {
 }
 
 details[open] summary::marker {
-    content: '\f0d8';
+    content: '\f0da';
 }
 
 #admin-page {
@@ -101,7 +101,7 @@ details p {
 
 #create-question form, #create-assignment form {
     margin: auto;
-    max-width: 500px;
+    max-width: 700px;
     background-color: white;
     padding: 1rem;
     display: flex;
@@ -140,7 +140,55 @@ details p {
     border: none;
     border-radius: 5px;
     padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
     cursor: pointer;
+}
+
+#create-question form button:hover, #create-assignment form button:hover {
+    background-color: #434343;
+}
+
+#create-question #cta, #create-assignment #cta {
+    background-color: #836ca9;
+}
+
+#create-question #cta:hover, #create-assignment #cta:hover {
+    background-color: #a288cb;
+}
+
+#question-select, #student-select {
+    display: flex;
+    flex-direction: column;
+    /* gap: 0.5rem; */
+    width: 100%;
+    background-color: #2d2d2d10;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    max-height: 300px;
+    overflow: auto;
+}
+
+
+#single-question-select, #single-student-select {
+    display: flex;
+    gap: 0.25rem;
+}
+
+#single-student-select label, #single-question-select label {
+    cursor: pointer;
+    flex-grow: 1;
+    width: 100%;
+    padding: 0rem 0.5rem;
+}
+
+#single-student-select input, #single-question-select input {
+    max-width: max-content;
+    accent-color: #836ca9;
+}
+
+#single-student-select input:checked ~ label, #single-question-select input:checked ~ label {
+    background-color: #836ca920;
+    border-radius: 5px;
 }
 
 @media screen and (max-width: 850px) {
@@ -152,4 +200,5 @@ details p {
     #admin-page {
         flex-direction: column;
     }
+
 }

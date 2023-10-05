@@ -35,14 +35,30 @@ block content
             form(action="/assignments/create", method="POST")
                 h3 Create Assignment
                 input(type="text" placeholder='Title' name='title')
+                div#question-select
+                    h3 Questions
+                    each question in questions
+                        #single-question-select
+                            input(type="checkbox" id=`checkbox-${question.id}` name=`questions[${question.id}]` value=`${question.id}`)
+                            label(for=`checkbox-${question.id}`)=question.title 
+                div#student-select
+                    h3 Students
+                    each student, idx in students
+                        #single-student-select
+                            input(type="checkbox" id=`checkbox-${student.id}` name=`users[${idx}]` value=`${student.id}`)
+                            if student.name
+                                label(for=`checkbox-${student.id}`)=student.name 
+                            else
+                                label(for=`checkbox-${student.id}`)=student.email 
                 #dialog-controls
                     button(formmethod='dialog') Cancel
-                    button Create
+                    button#cta Create
         dialog#create-question
             form(action="/questions/create", method="POST")
                 h3 Create Question
                 input(type="text" placeholder='Title' name='title')
                 textarea(name="description", cols="30", rows="10" placeholder='description')
+                input(type="number" placeholder='Points' name='points')
                 #dialog-controls
                     button(formmethod='dialog') Cancel
-                    button Create
+                    button#cta Create
