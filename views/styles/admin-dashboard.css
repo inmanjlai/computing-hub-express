@@ -22,16 +22,28 @@ details[open] summary::marker {
     max-width: 30%;
 }
 
-#all-assignments {
+#all-assignments, #all-questions {
     flex-grow: 1;
     background-color: white;
     overflow-y: auto;
 }
 
-#all-questions {
-    flex-grow: 1;
-    background-color: white;
-    overflow-y: auto;
+#all-assignments h3, #all-questions h3 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#add-button {
+    background-color: #836ca920;
+    border-radius: 5px;
+    color: #836ca9;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#add-button:hover {
+    background-color: #836ca940;
 }
 
 #question-list > p, #assignment-list > p {
@@ -50,7 +62,7 @@ details[open] summary::marker {
     border-top: 1px solid #2d2d2d40;
 }
 
-h3 {
+#left h3, #right h3 {
     font-weight: 600;
     padding: 0.5rem 1rem;
     background-color: ghostwhite;
@@ -61,6 +73,7 @@ h3 {
     border-bottom: 1px solid #2d2d2d20;
     padding: 0.5rem 1rem;
     background-color: white;
+    cursor: pointer;
 }
 
 details {
@@ -84,6 +97,50 @@ details p {
 
 .light-text {
     color: #2d2d2d40;
+}
+
+#create-question form, #create-assignment form {
+    margin: auto;
+    max-width: 500px;
+    background-color: white;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#create-question form h3, #create-assignment form h3 {
+    width: 100%;
+    text-align: start;
+}
+
+#create-question input, #create-question textarea, #create-assignment textarea, #create-assignment input {
+    border: 1px solid #2d2d2d40;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    width: 100%;
+    resize: none;
+}
+
+#dialog-controls {
+    display: flex;
+    gap: 1rem;
+    flex-grow: 1;
+    width: 100%;
+}
+
+#create-question form button, #create-assignment form button {
+    flex-grow: 1;
+    background-color: #2d2d2d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 850px) {

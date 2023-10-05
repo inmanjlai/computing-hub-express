@@ -76,3 +76,15 @@ function closeSubmitDialog() {
     const dialog = document.querySelector('#submit-assignment');
     dialog.close();
 }
+
+function openCreateAssignmentDialog() {
+    const dialog = document.querySelector('#create-assignment');
+
+    dialog.showModal();
+}
+
+function openCreateQuestionDialog() {
+    const dialog = document.querySelector('#create-question');
+
+    dialog.showModal();
+}

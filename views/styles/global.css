@@ -90,6 +90,7 @@ dialog::backdrop {
     display: flex;
     flex-grow: 1;
     position: relative;
+    min-height: 400px;
 }
 
 #load-file h3 {
@@ -129,6 +130,7 @@ dialog::backdrop {
     color: black;
     padding: 0.5rem;
     height: 100%;
+    font-family: Monaco, 'Roboto Mono', monospace;
 }
 
 #load-file-controls {
@@ -159,13 +161,13 @@ dialog::backdrop {
 }
 
 #close-load-button {
-    background-color: #2d2d2d;
+    background-color: #434343;
     color: white;
     border-bottom-left-radius: 5px;
 }
 
 #close-load-button:hover {
-    background-color: #434343;
+    background-color: #565656;
 }
 @media screen and (max-width: 650px) {
     #file-preview {

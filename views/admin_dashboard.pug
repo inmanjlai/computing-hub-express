@@ -8,15 +8,20 @@ block content
         div#left
             div#all-assignments
                 h3 Assignments
+                    span#add-button.material-symbols-rounded(onclick='openCreateAssignmentDialog()') add
                 div#assignment-list
                     for assignment in assignments
                         p#assignment=assignment.title
+                            //- span.material-symbols-rounded settings
             div#all-questions
                 h3 Questions
+                    span#add-button.material-symbols-rounded(onclick='openCreateQuestionDialog()') add
                 div#question-list
                     for question in questions
                         div#question
                             p=question.title
+                                //- span.material-symbols-rounded settings
+
         div#right
             h3 Submissions
             div#student-submissions
@@ -25,3 +30,19 @@ block content
                         summary=` ${assignment}`
                         each user_submission in submission
                             p=user_submission.users.name
+
+        dialog#create-assignment
+            form(action="/assignments/create", method="POST")
+                h3 Create Assignment
+                input(type="text" placeholder='Title' name='title')
+                #dialog-controls
+                    button(formmethod='dialog') Cancel
+                    button Create
+        dialog#create-question
+            form(action="/questions/create", method="POST")
+                h3 Create Question
+                input(type="text" placeholder='Title' name='title')
+                textarea(name="description", cols="30", rows="10" placeholder='description')
+                #dialog-controls
+                    button(formmethod='dialog') Cancel
+                    button Create
