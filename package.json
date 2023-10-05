@@ -1,15 +1,15 @@
 {
-  "name": "computing-hub-express",
+  "name": "computing-hub",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "School management software specialized around learning python.",
+  "author": "Ismail Manjlai",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.3.1",
