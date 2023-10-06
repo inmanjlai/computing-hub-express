@@ -11,8 +11,10 @@ block content
                     span#add-button.material-symbols-rounded(onclick='openCreateAssignmentDialog()') add
                 div#assignment-list
                     for assignment in assignments
-                        p#assignment=assignment.title
-                            //- span.material-symbols-rounded settings
+                        div#assignment
+                            p=assignment.title
+                            button(onclick=`(openDeleteAssignmentModal(${assignment.id}))`)
+                                span.material-symbols-rounded delete
             div#all-questions
                 h3 Questions
                     span#add-button.material-symbols-rounded(onclick='openCreateQuestionDialog()') add
@@ -20,8 +22,8 @@ block content
                     for question in questions
                         div#question
                             p=question.title
-                                //- span.material-symbols-rounded settings
-
+                            button(onclick=`(openDeleteQuestionModal(${question.id}))`)
+                                span.material-symbols-rounded delete
         div#right
             h3 Submissions
             div#student-submissions
@@ -29,7 +31,7 @@ block content
                     details
                         summary=` ${assignment}`
                         each user_submission in submission
-                            p=user_submission.users.name
+                            p(onclick=`openViewSubmissionModal(${JSON.stringify({user_id: user_submission.user_id, assignment_id: user_submission.assignment_id})})`)=user_submission.users.name
 
         dialog#create-assignment
             form(action="/assignments/create", method="POST")
@@ -40,16 +42,16 @@ block content
                     each question in questions
                         #single-question-select
                             input(type="checkbox" id=`checkbox-${question.id}` name=`questions[${question.id}]` value=`${question.id}`)
-                            label(for=`checkbox-${question.id}`)=question.title 
+                            label(for=`checkbox-${question.id}`)=question.title
                 div#student-select
                     h3 Students
                     each student, idx in students
                         #single-student-select
                             input(type="checkbox" id=`checkbox-${student.id}` name=`users[${idx}]` value=`${student.id}`)
                             if student.name
-                                label(for=`checkbox-${student.id}`)=student.name 
+                                label(for=`checkbox-${student.id}`)=student.name
                             else
-                                label(for=`checkbox-${student.id}`)=student.email 
+                                label(for=`checkbox-${student.id}`)=student.email
                 #dialog-controls
                     button(formmethod='dialog') Cancel
                     button#cta Create
@@ -62,3 +64,43 @@ block content
                 #dialog-controls
                     button(formmethod='dialog') Cancel
                     button#cta Create
+
+        dialog#delete-assignment
+            form(action='/assignments/delete' method='POST')
+                input(type="hidden" name='id')
+                h3 Are you sure?
+                p There is dependant data that might be deleted if you delete this Assignment, such as student's assignments that have already been submitted or worked on.
+                #dialog-controls
+                    button(formmethod='dialog') Cancel
+                    button#cta Confirm Delete
+
+        dialog#delete-question
+            form(action='/questions/delete' method='POST')
+                input(type="hidden" name='id')
+                h3 Are you sure?
+                p There is dependant data that might be deleted if you delete this Question. This question will be removed from any Assignments it was included in.
+                #dialog-controls
+                    button(formmethod='dialog') Cancel
+                    button#cta Confirm Delete
+
+        dialog#view-submission
+            #submission-content
+                button#close-button-submission(onclick='closeSubmissionModal()')
+                    span.material-symbols-rounded close
+                #list-of-submission-questions
+                    p question 1
+                    p question 2
+                #code-and-output
+                    h3 Code
+                    pre#code
+                        This is where the students code will be
+                    h3 Output
+                    div#output-container
+                        pre#output
+                        textarea#input
+                button(onclick='runitAdmin()') Run Code
+
+        script
+            include ./scripts/skulpt/skulpt.min.js
+        script
+            include ./scripts/skulpt/skulpt-stdlib.js

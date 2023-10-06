@@ -34,15 +34,17 @@ app.post('/assignments/create', async(req, res) => {
 
     })
 
-    req.body.users.forEach(async(id) => {
-        let newAssociation = await prisma.user_assignments.create({
-            data: {
-                assignment_id: newAssignment.id,
-                user_id: id
-            }
-        })
+    if (req.body.users) {
+        req.body.users.forEach(async(id) => {
+            let newAssociation = await prisma.user_assignments.create({
+                data: {
+                    assignment_id: newAssignment.id,
+                    user_id: id
+                }
+            })
 
-    })
+        })
+    }
 
     return res.redirect('/dashboard')
 
@@ -63,3 +65,70 @@ app.post('/questions/create', async(req, res) => {
 });
 
 export default app;
+
+app.post('/assignments/delete', async(req, res) => {
+
+    try {
+        await prisma.assignments.delete({
+            where: {
+                id: +req.body.id
+            }
+        })
+    } catch (err) {
+        console.log(err)
+    }
+
+    return res.redirect('/dashboard')
+
+});
+
+app.post('/questions/delete', async(req, res) => {
+
+    try {
+        await prisma.questions.delete({
+            where: {
+                id: +req.body.id
+            }
+        })
+    } catch (err) {
+        console.log(err)
+    }
+
+    return res.redirect('/dashboard')
+
+});
+
+app.get('/questions/:assignment_id', async(req, res) => {
+    if (!req.session.user) return res.redirect('/login')
+
+    const questions = await prisma.assignment_questions.findMany({
+        where: {
+            assignment_id: +req.params.assignment_id
+        },
+        include: {
+            questions: true
+        }
+    })
+
+    const questionsToSend = []
+
+    for (let i = 0; i < questions.length; i++) {
+        let question = questions[i];
+
+        let codedoc = await prisma.codedocs.findFirst({
+            where: {
+                problem: question.question_id.toString(),
+                assignment_id: +question.assignment_id
+            }
+        })
+
+        let reworkedQuestion = {...question, codedoc}
+        console.log(reworkedQuestion)
+        questionsToSend.push(reworkedQuestion)
+    }
+
+
+    console.log("HERE", questionsToSend)
+    return res.send(questionsToSend)
+
+});

@@ -76,27 +76,85 @@ details[open] summary::marker {
     cursor: pointer;
 }
 
+#close-button-submission {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
 details {
     background-color: #2d2d2d10;
 }
 
 details p {
     padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+    cursor: pointer;
 }
 
-#question-list div {
+details p:hover {
+    background-color: #836ca920;
+}
+
+#question-list div, #assignment-list div {
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid #2d2d2d20;
     gap: 0.5rem;
 }
 
-#question-list p {
+#question-list p, #assignment p {
     padding: 0.5rem 1rem;
+}
+
+#question, #assignment {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#assignment button, #question button  {
+    border: none;
+    border-radius: 5px;
+    background-color: #836ca920;
+    color: #836ca9;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 0.5rem 1rem;
+}
+
+#assignment button:hover, #question button:hover  {
+    background-color: #836ca940;
 }
 
 .light-text {
     color: #2d2d2d40;
+}
+
+#delete-assignment form, #delete-question form{
+    margin: auto;
+    max-width: 700px;
+    background-color: white;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#delete-assignment form button, #delete-question form button {
+    flex-grow: 1;
+    background-color: #2d2d2d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    width: 50%;
 }
 
 #create-question form, #create-assignment form {
@@ -111,6 +169,83 @@ details p {
     gap: 1rem;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#view-submission #submission-content {
+    position: relative;
+    margin: auto;
+    max-width: 700px;
+    background-color: white;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#list-of-submission-questions {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+#list-of-submission-questions p {
+    background-color: #836ca920;
+    color: #836ca9;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+#list-of-submission-questions p:hover {
+    background-color: #836ca940;
+}
+
+#list-of-submission-questions p.active {
+    background-color: #836ca9;
+    color: white;
+}
+
+#list-of-submission-questions p.active:hover {
+    background-color: #836ca9;
+}
+
+#code-and-output {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#code, #output-container {
+    border-radius: 5px;
+    background-color: #2d2d2d10;
+    border: 1px solid #2d2d2d40;
+    padding: 0.5rem 1rem;
+}
+
+#output-container #input {
+    background-color: transparent;
+    border: none;
+    resize: none;
+    outline: none;
+}
+
+#submission-content button {
+    background-color: #836ca9;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#submission-content button:hover {
+    background-color: #a288cb;
 }
 
 #create-question form h3, #create-assignment form h3 {
@@ -144,15 +279,15 @@ details p {
     cursor: pointer;
 }
 
-#create-question form button:hover, #create-assignment form button:hover {
+#create-question form button:hover, #create-assignment form button:hover, #delete-assignment form button:hover, #delete-question form button:hover {
     background-color: #434343;
 }
 
-#create-question #cta, #create-assignment #cta {
+#create-question #cta, #create-assignment #cta, #delete-assignment #cta, #delete-question #cta {
     background-color: #836ca9;
 }
 
-#create-question #cta:hover, #create-assignment #cta:hover {
+#create-question #cta:hover, #create-assignment #cta:hover, #delete-assignment #cta:hover, #delete-question #cta:hover {
     background-color: #a288cb;
 }
 
