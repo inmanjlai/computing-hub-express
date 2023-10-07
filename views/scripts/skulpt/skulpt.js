@@ -108,9 +108,9 @@ async function logevent() {
 editor.getSession().on("change",function(a,e) {
     //debugger;
 
-    e.timestamp = Date.now();;
+    a.timestamp = Date.now();
 
-    events.push(e);
+    events.push(a);
     if(events.length > 10) logevent();
 
 });
