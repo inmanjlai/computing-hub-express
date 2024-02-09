@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  computing-hub-service:
+    image: computing-hub
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    volumes:
+      - v-data:/usr/src/app/data
+
+volumes:
+  v-data:
