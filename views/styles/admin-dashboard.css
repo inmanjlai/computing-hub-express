@@ -123,6 +123,12 @@ details p:hover {
     margin: 0.5rem 1rem;
 }
 
+#question-list div#question-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+
 #assignment button:hover, #question button:hover  {
     background-color: #836ca940;
 }

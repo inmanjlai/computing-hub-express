@@ -169,6 +169,11 @@ dialog::backdrop {
 #close-load-button:hover {
     background-color: #565656;
 }
+
+.italic {
+    font-style: italic;
+}
+
 @media screen and (max-width: 650px) {
     #file-preview {
         display: none;

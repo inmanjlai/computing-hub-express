@@ -21,7 +21,9 @@ block content
                 div#question-list
                     for question in questions
                         div#question
-                            p=question.title
+                            div#question-details
+                                p=question.title
+                                p.italic=question.description
                             button(onclick=`(openDeleteQuestionModal(${question.id}))`)
                                 span.material-symbols-rounded delete
         div#right
