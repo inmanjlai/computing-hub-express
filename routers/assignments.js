@@ -92,12 +92,22 @@ app.put('/assignments', async(req, res) => {
     }
 });
 
-app.post('/user_assignments/:user_assignment_id', async(req, res) => {
+app.post('/user_assignments/:assignment_id/:user_id', async(req, res) => {
     if (!req.session.user) return res.redirect('/login');
+
+    console.log("assignment_id", req.params.assignment_id)
+    console.log("user_id", req.params.user_id)
+
+    let user_assignment_to_update = await prisma.user_assignments.findFirst({
+        where: {
+            user_id: req.params.user_id,
+            assignment_id: +req.params.assignment_id
+        }
+    })
 
     await prisma.user_assignments.update({
         where: {
-            id: +req.params.user_assignment_id
+            id: user_assignment_to_update.id
         },
         data: {
             submitted: 1

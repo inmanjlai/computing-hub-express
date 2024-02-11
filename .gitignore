@@ -1,1 +1,4 @@
 node_modules
+data/data.db
+data/data.db-wal
+data/data.db-shm

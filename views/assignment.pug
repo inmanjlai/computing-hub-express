@@ -39,7 +39,7 @@ block content
                 p Once you submit this assignment, you will <strong>NOT</strong> be able to work on it again.
                 div#submit-dialog-controls
                     button(onclick="closeSubmitDialog()") Cancel
-                    form(method="POST", action=`/user_assignments/${currentAssignment.user_assignments[0].id}`)
+                    form(method="POST", action=`/user_assignments/${currentAssignment.id}/${user.id}`)
                         button Submit
                             span.material-symbols-rounded task_alt
                 

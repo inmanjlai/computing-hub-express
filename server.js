@@ -61,7 +61,7 @@ app.get('/dashboard', async(req, res) => {
             }
         });
 
-        const assignments = user.user_assignments;
+        console.log(user, "HERE")
 
         return res.render('dashboard', { user, assignments })
     } else {

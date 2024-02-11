@@ -123,12 +123,10 @@ app.get('/questions/:assignment_id', async(req, res) => {
         })
 
         let reworkedQuestion = {...question, codedoc}
-        console.log(reworkedQuestion)
         questionsToSend.push(reworkedQuestion)
     }
 
 
-    console.log("HERE", questionsToSend)
     return res.send(questionsToSend)
 
 });

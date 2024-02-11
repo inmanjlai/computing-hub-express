@@ -7,13 +7,13 @@ block content
     div#dashboard-page
         div#pending-assignments
             h3 Pending Assignments
-            for assignment in assignments
+            for assignment in user.user_assignments
                 if !assignment.submitted
                     form(action=`/assignment` method="POST") 
                         input(type="hidden" value=`${assignment.assignments.id}` name='id')
                         button#assignment-list-item=assignment.assignments.title
         div#submitted-assignments
             h3 Submitted Assignments
-            for assignment in assignments
+            for assignment in user.user_assignments
                 if assignment.submitted
                     p#assignment-list-item=assignment.assignments.title

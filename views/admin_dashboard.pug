@@ -21,11 +21,12 @@ block content
                 div#question-list
                     for question in questions
                         div#question
-                            div#question-details
-                                p=question.title
+                            details#question-details
+                                summary
+                                    p=` ${question.title}`
+                                    button(onclick=`(openDeleteQuestionModal(${question.id}))`)
+                                        span.material-symbols-rounded delete
                                 p.italic=question.description
-                            button(onclick=`(openDeleteQuestionModal(${question.id}))`)
-                                span.material-symbols-rounded delete
         div#right
             h3 Submissions
             div#student-submissions
@@ -94,8 +95,7 @@ block content
                     p question 2
                 #code-and-output
                     h3 Code
-                    pre#code
-                        This is where the students code will be
+                    pre#code="This submission is empty"
                     h3 Output
                     div#output-container
                         pre#output

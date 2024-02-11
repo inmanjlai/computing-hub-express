@@ -1,14 +1,10 @@
 document.addEventListener('DOMContentLoaded', async(e) => {
-    console.log('hello the assignment page has loaded')
-
     const questionList = document.querySelector('#question-list');
     const firstQuestion = questionList.children[0];
     firstQuestion.classList.add('active')
 
     const question = JSON.parse(firstQuestion.getAttribute('data-question'))
     localStorage.setItem('currentQuestion', firstQuestion.getAttribute('data-question'));
-
-    console.log(question)
 
     const userid = getCookie('userid');
 

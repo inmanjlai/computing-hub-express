@@ -7,11 +7,12 @@ datasource db {
   url      = "file:../data/data.db"
 }
 
-model migrations {
-  file    String @id
-  applied Int
-
-  @@map("_migrations")
+model assignment_questions {
+  id            Int         @id @default(autoincrement())
+  question_id   Int
+  assignment_id Int
+  questions     questions   @relation(fields: [question_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  assignments   assignments @relation(fields: [assignment_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model assignments {
@@ -19,6 +20,14 @@ model assignments {
   title                String
   assignment_questions assignment_questions[]
   user_assignments     user_assignments[]
+}
+
+model classes {
+  created  String              @default("strftime('%Y-%m-%d %H:%M:%fZ')")
+  id       String              @id @default("'r'||lower(hex(randomblob(7)))")
+  students Unsupported("json") @default(dbgenerated("'[]'"))
+  title    String              @default("")
+  updated  String              @default("strftime('%Y-%m-%d %H:%M:%fZ')")
 }
 
 model codedocs {
@@ -33,6 +42,15 @@ model codedocs {
   assignment_id Int?
 }
 
+model coding_problems {
+  created     String  @default("strftime('%Y-%m-%d %H:%M:%fZ')")
+  description String  @default("")
+  id          String  @id @default("'r'||lower(hex(randomblob(7)))")
+  points      Decimal @default(0)
+  title       String  @default("")
+  updated     String  @default("strftime('%Y-%m-%d %H:%M:%fZ')")
+}
+
 model events {
   created    String @default("strftime('%Y-%m-%d %H:%M:%fZ')")
   eventtype  String @default("")
@@ -40,16 +58,6 @@ model events {
   updated    String @default("strftime('%Y-%m-%d %H:%M:%fZ')")
   userid     String @default("")
   whichevent String @default("")
-}
-
-model users {
-  id                     String  @id @default("'r'||lower(hex(randomblob(7)))")
-  name                   String?
-  email                  String?
-  passwordHash           String?
-  username               String?
-  isAdmin                Boolean @default(false)
-  user_assignments       user_assignments[]
 }
 
 model questions {
@@ -60,37 +68,22 @@ model questions {
   assignment_questions assignment_questions[]
 }
 
-model assignment_questions {
-  id            Int         @id @default(autoincrement())
-  question_id   Int
-  assignment_id Int
-  assignments   assignments @relation(fields: [assignment_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  questions     questions   @relation(fields: [question_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-}
-
 model user_assignments {
   id            Int         @id @default(autoincrement())
   user_id       String
   assignment_id Int
   submitted     Int?
+  users         users       @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   assignments   assignments @relation(fields: [assignment_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users         users   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model users_old {
-  avatar                 String             @default("")
-  created                String             @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  email                  String             @default("")
-  emailVisibility        Boolean            @default(false)
-  id                     String             @id @default("'r'||lower(hex(randomblob(7)))")
-  lastResetSentAt        String             @default("")
-  lastVerificationSentAt String             @default("")
-  name                   String             @default("")
-  passwordHash           String
-  tokenKey               String             @unique(map: "__pb_users_auth__tokenKey_idx")
-  updated                String             @default("strftime('%Y-%m-%d %H:%M:%fZ')")
-  username               String             @unique(map: "__pb_users_auth__username_idx")
-  verified               Boolean            @default(false)
-  isAdmin                Boolean            @default(false)
-  // user_assignments       user_assignments[]
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model users {
+  id               String             @id @default("'r'||lower(hex(randomblob(7)))")
+  name             String?
+  email            String?
+  passwordHash     String?
+  username         String?
+  isAdmin          Boolean @default(false)
+  user_assignments user_assignments[]
 }
